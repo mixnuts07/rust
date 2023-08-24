@@ -30,5 +30,29 @@ fn main() {
     let a_array: [usize; 5] = [3; 5];
     println!("The tup value a_array is {}", a_array.len());
     
-    
+    let func_return = another_function(5);
+    println!("{}", func_return);
+    println!("{}", plus_one(5));
+    if_state(4);
+}
+
+fn another_function(x: i32) -> i32 {
+    let y = {
+        let z = x  +1;
+        z + 1
+    };
+    return y
+}
+
+// セミコロンを x+ 1につけると式から文に変わるのでコンパイルエラーになる
+fn plus_one (x: i32) -> i32 {
+    x + 1
+}
+
+fn if_state(number: usize) {
+    if number < 5 {
+        println!("Conditions was true");
+    } else {
+        println!("Conditions was false");
+    }
 }
