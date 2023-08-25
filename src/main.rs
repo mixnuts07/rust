@@ -44,6 +44,7 @@ fn main() {
     for_st();
     for_array_st();
     own();
+    move_test();
 }
 
 fn another_function(x: i32) -> i32 {
@@ -128,4 +129,16 @@ fn own() {
 
     println!("{}", s);
 
+}
+// Rustではブロックを抜けるタイミングでOSにメモリを返している
+
+// move
+fn move_test() {
+    let s1 = String::from("Hello");
+    // 新しいヒープ領域に新しくコピーしている→パフォーマンス悪い
+    let s2 = s1;
+    // println!("{}", s1); s1はもうアクセスできなくなっている
+    // Cloneを使えばs1も使えるようになる
+    let s3 = s2.clone();
+    println!("{} {}", s2, s3); 
 }
