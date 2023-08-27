@@ -142,3 +142,20 @@ fn move_test() {
     let s3 = s2.clone();
     println!("{} {}", s2, s3); 
 }
+
+// 参照...所有権を一時的に借りる
+// 借用...関数の引数に参照を受け取ること
+struct User {
+    username: String,
+    email: String,
+    sing_in_count: u64,
+    active: bool
+}
+fn struct_sample(email: String, username: String) -> User {
+    User {
+        username,
+        email,
+        sing_in_count: 1,
+        active: true
+    }
+}
