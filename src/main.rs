@@ -1,6 +1,8 @@
 pub mod second;
 pub mod third;
+
 use second::hello;
+use third::return_three::return_three;
 
 fn main() {
     let mut x: i32 = -5;
@@ -48,6 +50,7 @@ fn main() {
     own();
     move_test();
     hello();
+    println!("return {}", return_three());
 }
 
 fn another_function(x: i32) -> i32 {

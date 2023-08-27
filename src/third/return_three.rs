@@ -1,3 +1,3 @@
-pub fn return_three() -> usize{
-    3;
+pub fn return_three() -> usize {
+    return 3;
 }
