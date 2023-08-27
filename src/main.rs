@@ -1,4 +1,4 @@
-use std::str::FromStr;
+
 
 fn main() {
     let mut x: i32 = -5;
@@ -171,5 +171,44 @@ fn struct_sample(email: String, username: String) -> User {
         email,
         sing_in_count: 1,
         active: true
+    }
+}
+
+enum IpAddrKind {
+    v4,
+    v6,
+}
+enum IpAddr {
+    v4(String),
+    c6(String),
+}
+fn enum_test() {
+    let four = IpAddrKind::v4;
+    let six = IpAddrKind::v6;
+}
+
+enum Message {
+    Quit,
+    Mover {x: i32, y: i32},
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+fn color_to_str(color: &Color) -> &str {
+    match color {
+        Color::Red => "#FF0000",
+        Color::Green => "#00FF00",
+        Color::Blue => "#0000FF",
+    }
+}
+fn find_maybe_number(maybe_number: Option<u32>) {
+    match maybe_number {
+        Some(number) => println!("found {}", number),
+        None => println!("nothing found"),
     }
 }
