@@ -1,4 +1,6 @@
-
+pub mod second;
+pub mod third;
+use second::hello;
 
 fn main() {
     let mut x: i32 = -5;
@@ -45,6 +47,7 @@ fn main() {
     for_array_st();
     own();
     move_test();
+    hello();
 }
 
 fn another_function(x: i32) -> i32 {
@@ -210,5 +213,13 @@ fn find_maybe_number(maybe_number: Option<u32>) {
     match maybe_number {
         Some(number) => println!("found {}", number),
         None => println!("nothing found"),
+    }
+}
+fn if_let() {
+    let maybe_number: Option<u32> = Some(6);
+    if let Some(number) = maybe_number {
+        println!("number: {}", number);
+    } else {
+        println!("this is else statement");
     }
 }
