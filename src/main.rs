@@ -145,13 +145,27 @@ fn move_test() {
 
 // 参照...所有権を一時的に借りる
 // 借用...関数の引数に参照を受け取ること
+// #[derive(Debug)]
 struct User {
     username: String,
     email: String,
     sing_in_count: u64,
-    active: bool
+    active: bool,
 }
+impl User {
+    // static method
+    fn square() -> Self{
+        User {
+            username: String::from("Yamamoto"),
+            email: String::from("sample@gmail.com"),
+            sing_in_count: 1,
+            active: true
+        }
+    }
+}
+
 fn struct_sample(email: String, username: String) -> User {
+    let user: User = User::square();
     User {
         username,
         email,
