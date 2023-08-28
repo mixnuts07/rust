@@ -18,3 +18,5 @@ fn main() {
 }
 
 // enum, struct, fn, (Result), impl でジェネリクスが使える
+
+// クレイト境界...
