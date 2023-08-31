@@ -11,3 +11,5 @@ cargo run
 cargo check
 # リリースに向けたビルド
 cargo build --release
+# テストの実行 （#[test]がついているもの）
+cargo test
