@@ -5,7 +5,9 @@ fn main() {
     
     println!("Please input your guess.");
 
-    let mut guess = String::new();
+    // String::new()関数を呼び出し、String型の新しいインスタンスを作成する
+    // ::は関連関数（static method）を呼び出している
+    let mut guess = String::new(); 
 
     io::stdin()
         .read_line(&mut guess)
