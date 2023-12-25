@@ -10,6 +10,58 @@
   - 所有権システムにより、データ競合をコンパイル時に検出し防止する。
 - 所有権システム
   - Rust の所有権によってガベージコレクションやランタイムコストなしにメモリ管理を行う。
+- スタックとヒープ（実行時にコードが使用できるメモリの一部）
+  - スタック...得た順と逆順で取り出す。高速。Push,Pop。既知の固定サイズ。(last in, first out.)
+  - ヒープ...得た順と同順で取り出す。低速。可変。データを置く際に OS は空領域を確保(allocate)し、ポインタを返す。(first in, first out.)
+- 所有者規則
+  - Rust の各値は、所有者と呼ばれる変数と対応している。
+  - いかなる時も所有者は 1 つである。
+  - 所有者がスコープから外れたら、値は破棄される。
+- メモリと確保（allocate, free）
+  - メモリは実行時に OS に要求される。
+  - String 型を使用し終わったら OS にメモリを返還する方法が必要（ガベージコレクタ）ただ Rust は自動的に返還する仕組み。
+  - ムーブ(shallow copy に近い)
+    ```rust
+      let s1 = String::from("hello");
+      let s2 = s1
+    ```
+    - s1 は s2 にムーブされる。(メモリ安全性のため)
+      ![Alt text](<images/Screen Shot 2023-12-25 at 9.45.16 AM.png>)
+  - クローン(deep copy に近い)
+    ```rust
+      let s1 = String::from("hello");
+      let s2 = s1.clone(); // ヒープデータのコピー
+    ```
+  - コピー(スタックのみのデータ。サイズが既知ならコピーできる)
+    ```rust
+      let s1 = 5;
+      let s2 = s1;
+    ```
+  - Copy 型
+    - Copy 型...単純なスカラー値。タプル
+    - Copy 型ではないもの...メモリ確保が必要だったり、何らかの形態のリソース。
+- 参照(&)
+  - 所有権をもらうことなく、値を参照することができる。
+    ![Alt text](<images/Screen Shot 2023-12-25 at 1.08.22 PM.png>)
+    ```rust
+    let s1 = String::from("hello");
+    let len = calculate_length(&s1);
+    // この&s1記法によりs1の値を参照する参照を生成できる。
+    // 参照がスコープを抜けてもs1はdropされなくなる
+    ```
+- 参照外し(\*)
+- 借用
+
+  - 関数の引数に参照を取ること。借用した何かを変更しようとしたら動かない。(参照は不変のため)
+
+  ```rust
+  let s = String::from("hello");
+  change(&s);
+  fn change(some_thing: &String) {
+   some_thing.push_str(", world")l
+  }
+  ```
+
 - パフォーマンス
   - C / C++に匹敵する高性能を持ち、システムプログラミングに適している。
 - ゼロコスト抽象化
@@ -56,26 +108,25 @@
 - !
   - マクロを呼び出すときに使用される。（println!()）
   - コンパイル時にコードを生成する。
-- const(定数＋型明記必須。全て大文字＋_区切り), let(変数)
+- const(定数＋型明記必須。全て大文字＋\_区切り), let(変数)
 - シャドーイング
-  - letで定義した変数を上書くこと。不変とは異なり、letを使いちょっとした加工ができる。
-- データ型（2つ）
-  - スカラー（4つ）
+  - let で定義した変数を上書くこと。不変とは異なり、let を使いちょっとした加工ができる。
+- データ型（2 つ）
+  - スカラー（4 つ）
     - 整数、不動小数点、文字列、論理値
-  ![Screen Sh　ot 2023-12-24 at 12.41.59 PM.png](..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fy1%2Fysf2t7h529n60620czhw1d2r0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_2Go2w8%2FScreen%20Shot%202023-12-24%20at%2012.41.59%20PM.png)
-  ![Screen Shot 2023-12-24 at 12.43.50 PM.png](..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fy1%2Fysf2t7h529n60620czhw1d2r0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_uBZIhV%2FScreen%20Shot%202023-12-24%20at%2012.43.50%20PM.png)
-    - 複合(2つ)
+    - 複合(2 つ)
       - タプル
-        - 複数の何らかの値を1つの複合型にまとめ上げる。
-        ``` rust 
+        - 複数の何らかの値を 1 つの複合型にまとめ上げる。
+        ```rust
           let tup: (i32, f64, u8) = (500, 6.4, 1);
           let (x, y, z) = tup;
-          let five_hundred = x.0 // 500 
+          let five_hundred = x.0 // 500
         ```
         - 配列(配列は固定長なので、一度宣言されたらサイズを変更できない！)
           - スタック上に確保される一塊のメモリ。
-            ``` rust
+            ```rust
               let a: [i32, 5] = [1,2,3,4,5]
               let second = a[1] // 2
               let a = [3,5] // [3,3,3,3,3]
             ```
+- ；...文はつく。式にはつかない。
