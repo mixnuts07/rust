@@ -34,6 +34,13 @@ fn main() {
 
     let rect1 = Rectangle { width: 30, height: 50 };
     println!("The area of the rectangle is {:#?} square pixels.", rect1.area());
+
+    let four = IdAddKind::v4;
+    route(IpAddKind::v4);
+    let home = IpAddr {
+        kind: IpAddKind::v6,
+        address: String::from("::1")
+    };
 }
 
 fn takes_ownership(some_thing: String) {
@@ -68,5 +75,33 @@ struct Rectangle {
 impl Rectangle {
     fn area(&self) -> u32 {
         self.width * self.height
+    }
+}
+
+enum IdAddKind {
+    v4,
+    v6
+}
+fn route(ip_type: IpAddKind) { }
+struct IpAddr {
+    kind: IpAddKind,
+    address: String
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter
+}
+fn value_in_cents(coin:Coin) -> u32 {
+    match coin {
+        Coin::Penny => {
+            println!("Lucky penny!");
+            1
+        },
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25
     }
 }
